@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    body {
+  font-family: Arial, sans-serif;
+  background: #f4f6f9;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.quiz-container {
+  width: 400px;
+  background: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  text-align: center;
+}
+
+button {
+  margin: 10px;
+  padding: 10px 15px;
+  cursor: pointer;
+  border: none;
+  border-radius: 8px;
+  background: #007bff;
+  color: #fff;
+  font-weight: bold;
+}
+
+button:hover {
+  background: #0056b3;
+}
+
+.option {
+  display: block;
+  margin: 8px 0;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.option.correct {
+  background: #28a745;
+  color: white;
+}
+
+.option.wrong {
+  background: #dc3545;
+  color: white;
+}
+
+.option.unanswered {
+  background: gray;
+  color: white;
+}
+
+#timer {
+  font-size: 18px;
+  margin: 10px 0;
+  font-weight: bold;
+  color: #333;
+}
+
+#progress {
+  margin: 10px 0;
+  font-style: italic;
+}
+</style>
+<body>
+   <div class="quiz-container">
+    <h1>Flash Quiz Game</h1>
+    <div id="quiz">
+      <button id="startBtn">Start Quiz</button>
+    </div>
+  </div>
+</body>
+</html>
+<script>
+    //  Array of Questions
+const questions = [
+  {
+    question: "Which language runs in a web browser?",
+    options: ["Python", "C", "Java", "JavaScript"],
+    answer: "JavaScript"
+  },
+  {
+    question: "What does CSS stand for?",
+    options: ["Central Style Sheets", "Cascading Style Sheets", "Colorful Style Sheets", "Computer Style Sheets"],
+    answer: "Cascading Style Sheets"
+  },
+  {
+    question: "What does HTML stand for?",
+    options: ["Hyper Text Markup Language", "Home Tool Markup Language", "Hyperlinks Text Mark Language", "Hyper Tool Multi Language"],
+    answer: "Hyper Text Markup Language"
+  },
+  {
+    question: "Inside which HTML element do we put the JavaScript?",
+    options: ["<js>", "<scripting>", "<script>", "<javascript>"],
+    answer: "<script>"
+  },
+  {
+    question: "Which company developed JavaScript?",
+    options: ["Netscape", "Google", "Microsoft", "Oracle"],
+    answer: "Netscape"
+  }
+];  
+
+//  DOM references
+const quizContainer = document.getElementById("quiz");
+const startBtn = document.getElementById("startBtn");
+
+let currentIndex = 0;
+let timerInterval;
+let timeLeft = 10;
+
+let score = {
+  correct: 0,
+  wrong: 0,
+  unanswered: 0
+};
+
+// Start Quiz
+startBtn.addEventListener("click", startQuiz);
+
+function startQuiz() {
+  // Reset state
+  currentIndex = 0;
+  score = { correct: 0, wrong: 0, unanswered: 0 };
+  shuffleArray(questions); // randomize questions
+  loadQuestion();
+}
+
+// Load Question
+function loadQuestion() {
+  if (currentIndex >= questions.length) {
+    showResults();
+    return;
+  }
+
+  let q = questions[currentIndex];
+  quizContainer.innerHTML = `
+    <h2>${q.question}</h2>
+    <div id="options"></div>
+    <div id="timer">Time: 10</div>
+    <div id="progress">Question ${currentIndex + 1} of ${questions.length}</div>
+  `;
+
+  let optionsContainer = document.getElementById("options");
+
+  // Shuffle options
+  let shuffledOptions = [...q.options];
+  shuffleArray(shuffledOptions);
+
+  shuffledOptions.forEach(opt => {
+    let btn = document.createElement("button");
+    btn.classList.add("option");
+    btn.textContent = opt;
+    btn.onclick = () => checkAnswer(opt, handleResult); // callback function
+    optionsContainer.appendChild(btn);
+  });
+
+  // Timer
+  timeLeft = 10;
+  document.getElementById("timer").textContent = `Time: ${timeLeft}`;
+  clearInterval(timerInterval);
+  timerInterval = setInterval(() => {
+    timeLeft--;
+    document.getElementById("timer").textContent = `Time: ${timeLeft}`;
+    if (timeLeft === 0) {
+      clearInterval(timerInterval);
+      checkAnswer(null, handleResult); // timeout
+    }
+  }, 1000);
+}
+
+// Answer Checking with Callback
+function checkAnswer(selected, callback) {
+  clearInterval(timerInterval);
+  let q = questions[currentIndex];
+  let isCorrect = selected === q.answer;
+
+  if (selected === null) {
+    score.unanswered++;
+    callback("unanswered", q.answer);
+  } else if (isCorrect) {
+    score.correct++;
+    callback("correct", q.answer);
+  } else {
+    score.wrong++;
+    callback("wrong", q.answer);
+  }
+}
+
+// Handle Result
+function handleResult(result, correctAnswer) {
+  let options = document.querySelectorAll(".option");
+
+  options.forEach(opt => {
+    if (opt.textContent === correctAnswer) {
+      opt.classList.add("correct");
+    } else if (result === "wrong" && opt.textContent !== correctAnswer) {
+      opt.classList.add("wrong");
+    } else if (result === "unanswered") {
+      opt.classList.add("unanswered");
+    }
+  });
+
+  // Move to next after 2s
+  setTimeout(() => {
+    currentIndex++;
+    loadQuestion();
+  }, 2000);
+}
+
+// Show Results
+function showResults() {
+  quizContainer.innerHTML = `
+    <h2>Quiz Finished!</h2>
+    <p>Correct: ${score.correct}</p>
+    <p>Wrong: ${score.wrong}</p>
+    <p>Unanswered: ${score.unanswered}</p>
+    <p>Total Score: ${score.correct}/${questions.length}</p>
+    <button onclick="startQuiz()">Restart Quiz</button>
+  `;
+}
+
+// Utility: Shuffle Array
+function shuffleArray(arr) {
+  for (let i = arr.length - 1; i > 0; i--) {
+    let j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+}
+
+</script>
+</html>

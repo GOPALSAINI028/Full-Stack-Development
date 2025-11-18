@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title> Online Book Store - Array Methods</title>
+  <style>
+    body{
+      font-family: Arial, sans-serif;
+      background: #f4f6f9;
+      margin: 0;
+      padding: 20px;
+    }
+    h1 {
+      text-align: center;
+      color: #2c3e50;
+      text-decoration: underline;
+    }
+    .container {
+      max-width: 700px;
+      margin: 20px auto;
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    .counter {
+      font-size: 18px;
+      margin-bottom: 15px;
+      font-weight: bold;
+      color: #34495e;
+    }
+    ul {
+      list-style: none;
+      padding: 0;
+      margin-bottom: 20px;
+    }
+    li {
+      background: #ecf0f1;
+      margin: 5px 0;
+      padding: 10px;
+      border-radius: 6px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+    }
+    button {
+      padding: 10px 15px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      color: white;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+    .add { background: #27ae60; }
+    .add:hover { background: #1e8449; }
+    .delete { background: #e74c3c; }
+    .delete:hover { background: #c0392b; }
+    .copy { background: #3498db; }
+    .copy:hover { background: #21618c; }
+    .slice { background: #8e44ad; }
+    .slice:hover { background: #6c3483; }
+    .merge { background: #f39c12; }
+    .merge:hover { background: #d68910; }
+    .unshift { background: #16a085; }
+    .unshift:hover { background: #117864; }
+    .shift { background: #d35400; }
+    .shift:hover { background: #a04000; }
+    .string  { background: #1b85cc;}
+    .string:hover  { background: #1b5174;}
+    .splice{background:#34495e;}
+    .splice:hover{background:#212e3a;}
+
+  </style>
+</head>
+<body>
+  <h1> Online Book Store</h1>
+  <div class="container">
+    <div class="counter">Total Books:<span id="bookCount">0</span></div>
+
+    <ul id="bookList"></ul>
+
+    <div class="buttons">
+      <button class="add"onclick="addBook()">Add (push)</button>
+      <button class="unshift"onclick="unshiftBook()">Add (unshift)</button>
+      <button class="delete"onclick="deleteBook()">Remove Last (pop)</button>
+      <button class="shift"onclick="shiftBook()">Remove First (shift)</button>
+      <button class=splice onclick="spliceBooks()">Delete by Index (splice)</button>
+      <button class="copy"onclick="copyWithinBooks()">CopyWithin</button>
+      <button class="slice"onclick="sliceBooks()">Slice</button>
+      <button class="merge"onclick="mergeBooks()"> Merge</button>
+      <button class="string"onclick="stringBooks()">toString & join</button>
+    </div>
+  </div>
+  </body>
+  <script>
+    let books = ["Math", "Science", "English"];
+                 
+    function renderBooks() {
+      const list = document.getElementById("bookList");
+      list.innerHTML = "";
+      books.forEach((book, index) => {
+        list.innerHTML += `<li>${index + 1}. ${book}</li>`;
+      });
+      document.getElementById("bookCount").innerText = books.length;
+    }
+
+    // push
+    function addBook() {
+      let newBook = prompt("Enter book name:");
+      if (newBook) {
+        books.push(newBook);
+        renderBooks();
+      }
+    }
+
+    // unshift
+    function unshiftBook() {
+      let newBook = prompt("Enter book name :");
+      if (newBook) {
+        books.unshift(newBook);
+        renderBooks();
+      }
+    }
+
+    // pop
+    function deleteBook() {
+      books.pop();
+      renderBooks();
+    }
+
+    // shift
+    function shiftBook() {
+      books.shift();
+      renderBooks();
+    }
+
+    // splice
+    function spliceBooks() {
+      let idx = prompt("Enter index to delete :");
+      if (idx !== null && !isNaN(idx)) {
+        books.splice(idx, 1);
+        renderBooks();
+      }
+    }
+
+    // copyWithin 
+    function copyWithinBooks() {
+      books.copyWithin(1, 0, 2);
+      renderBooks();
+    }
+ 
+    // Slice Example
+    function sliceBooks() {
+      let section = books.slice(0, 2);
+      alert("Sliced Books: " + section.join(", "));
+    }
+
+    // Merge Example
+    function mergeBooks() {
+      let newArrivals = ["History", "Geography"];
+      books = books.concat(newArrivals);
+      renderBooks();
+    }
+
+    // toString & join
+    function stringBooks() {
+      alert("toString(): " + books.toString() + "\njoin(' | '): " + books.join(" | "));
+    }
+
+    // Initial render
+    renderBooks();
+  </script>
+</html>

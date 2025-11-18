@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+<style>
+ body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      padding: 20px;
+      background: #f4f4f9;
+    }
+    h1 {
+      color: #333;
+    }
+    .result-box {
+      background: #fff;
+      padding: 15px;
+      border-radius: 10px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      margin-top: 20px;
+    }
+    .result-box p {
+      font-size: 16px;
+      margin: 8px 0;
+    }
+    .highlight {
+      color: green;
+      font-weight: bold;
+    }
+</style>
+</head>
+<body>
+   <h1> School Result Management System</h1>
+  
+  
+  <div class="result-box" id="output"></div> 
+</body>
+<script>
+// Student Data
+    let students = ["Rahul", "Priya", "Aman", "Rahul", "Neha"];
+    let marks = [25, 35, 45, 60, 75];
+
+    let output = "";
+
+    // indexOf
+    let firstRahul = students.indexOf("Rahul");
+    output += `<p>First Rahul is at index <span class="highlight">${firstRahul}</span></p>`;
+
+    // lastIndexOf
+    let lastRahul = students.lastIndexOf("Rahul");
+    output += `<p>Last Rahul is at index <span class="highlight">${lastRahul}</span></p>`;
+
+    //  includes
+    let Neha = students.includes("Neha");
+    output += `<p>Neha is present <span class="highlight">${Neha}</span></p>`;
+
+    // 4. find
+    let firstPass = marks.find(m => m > 40);
+    output += `<p>First passing marks  <span class="highlight">${firstPass}</span></p>`;
+
+    //  findIndex
+    let firstPassIndex = marks.findIndex(m => m > 40);
+    output += `<p>First passing student index  <span class="highlight">${firstPassIndex}</span></p>`;
+
+    //  findLast
+    let lastAbove50 = marks.findLast(m => m > 50);
+    output += `<p>Last student scoring above 50  <span class="highlight">${lastAbove50}</span></p>`;
+
+    //  findLastIndex
+    let lastPassIndex = marks.findLastIndex(m => m > 40);
+    output += `<p>Last passing student index  <span class="highlight">${lastPassIndex}</span></p>`;
+
+    // Show in webpage
+    document.getElementById("output").innerHTML = output;
+</script>
+</html>

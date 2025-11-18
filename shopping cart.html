@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+<style>
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f8f9fa;
+    color:#333; 
+    margin:0;
+    padding:0;
+}
+.container {
+    max-width: 1000px;
+    margin:auto;
+    padding: 30px;
+    border-radius: 20px;
+    border: 1px solid rgb(242, 238, 238);
+    box-shadow: 0px 5px 15px rgba(23, 23, 23, 0.3) ;
+}
+nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: linear-gradient(to right, #3e0c74, #2f68cb);
+    color: white;
+    padding: 15px ;
+    margin: 10px;
+    border-radius:10px;
+}
+nav h4 {
+    margin: 0;
+    font-size: 22px;
+    font-weight: bold;
+}
+.search {
+    flex:1;
+    display: flex;
+    justify-content:right;
+}
+.search input {
+    width: 40%;
+    padding: 8px;
+    border-radius: 20px;
+    outline: none;
+}
+.main{
+    display:flex;
+    margin-top: 30px;
+    gap: 30px;
+}
+.products{
+    flex:3;
+    display:grid;
+    grid-template-columns:repeat(2, 1fr);
+    gap:20px;
+}
+.product {
+    background-color: #fff;
+    padding: 15px;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(8, 22, 111, 0.3);
+    text-align: center;
+    transition: all 0.3s ease-in-out;
+    cursor: pointer;
+}
+.product:hover{
+    transform: translateY(-8px) scale(1.05); 
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.3)
+}
+.product img {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+.product h6 {
+    margin: 10px 0 5px;
+    font-size: 1.1rem;
+    color: #333;
+}
+.product p {
+    font-size: 1rem;
+    margin-bottom: 10px;
+    color: #444;
+}
+.product button{
+    background:#007bff;
+    color:#fff;
+    border:none;
+    padding:8px 15px;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+.product button:hover {
+    background:#0056b3;
+}
+#cart {
+    flex: 1.2;
+    background-color: #fff;
+    border-radius: 15px;
+    padding: 20px;
+    max-height: fit-content;
+    box-shadow: 0 5px 15px rgba(0, 255, 231, 0.2);
+}
+#cart h3 {
+    color: #007bff;
+    text-align: center;
+    margin-bottom: 20px;
+}
+#cart-items  {
+    list-style: none;
+    padding: 0;
+}
+#cart-items li{
+    display:flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 10px 0px;
+    padding: 10px;
+    background: #f9f9f9;
+    border-radius: 10px;
+}
+.cart-buttons  {
+    margin-left: 5px;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.cart-buttons .plus {
+    background: #28a745;
+    color: white;
+}
+.cart-buttons .minus {
+    background: #dc3545;
+    color: white;
+}
+#total {
+    font-weight: bold;
+    color: #007bff;
+}
+@media screen and (max-width: 768px) {
+    .main {
+        flex-direction:row-reverse;
+    }
+}
+
+</style>
+<body>
+    <div class="container">
+    <nav>
+        <h4>🛒Shopping Mart</h4>
+        <div class="search">
+        <input type="text" id="search"  placeholder="Search Products..." onkeyup="searchProduct()">
+        </div>
+    </nav>
+ <div class="main">
+ <div class="products">
+<div class="product" id="mobile-card">
+        <img src="Assets/mobile.png"  alt="mobile">
+        <h6>Mobile</h6>
+        <p> ₹8,000</p>
+        <button type="button" class="btn btn-primary"  onclick="addMobile()">Add to Cart</button>
+</div>
+<div class="product" id="laptop-card">
+        <img src="Assets/laptop.png" alt="laptop">
+        <h6>laptop</h6>
+        <p>₹30,000</p>
+        <button type="button" class="btn btn-primary"  onclick="addLaptop()">Add to Cart</button>
+</div>
+<div class="product" id="tablet-card">
+        <img src="Assets/tablet.png"alt="tablet">
+        <h6>Tablet</h6>
+        <p>₹20,000</p>
+        <button type="button" class="btn btn-primary" onclick="addTablet()">Add to Cart</button>
+</div>
+<div class="product" id="watch-card">
+        <img src="Assets/smart watch.png"alt="watch">
+        <h6>Smart-Watch</h6>
+        <p>₹2000</p>
+        <button type="button" class="btn btn-primary" onclick="addsmartWatch()">Add to Cart</button>
+</div>
+<div class="product" id="led-card">
+        <img src="Assets/led.png"alt="led">
+        <h6>LED</h6>
+        <p>₹20,000</p>
+        <button type="button" class="btn btn-primary" onclick="addLed()">Add to Cart</button>
+  </div>
+<div class="product" id="Ear-Phone-card">
+        <img src="Assets/earphone.png" alt="Ear-Phone">
+        <h6>Ear-Phone</h6>
+        <p>₹2,500</p>
+        <button type="button" class="btn btn-primary" onclick="addEarphone()">Add to Cart</button>
+</div>
+</div><br><br>
+<div id ="cart">
+<h3>cart</h3>
+<ul id="cart-items"></ul>
+
+<p id="total">Total Items:0 | Total Price:₹0</p>
+     </div>
+  </div>
+</div>
+<script>
+    let mobileQty= 0; 
+    let laptopQty=0;
+    let tabletQty=0;
+    let ledQty=0;
+    let earphoneQty=0;
+    let smartwatchQty=0;
+    
+    let totalItems=0;
+    let totalPrice=0;
+
+     //add fuction//
+    function addMobile(){
+        mobileQty=mobileQty+1;
+        totalItems=totalItems+1;
+        totalPrice=totalPrice+8000;
+
+    showCart();
+    }
+    function addLaptop(){
+        laptopQty=laptopQty+1;
+        totalItems=totalItems+1;
+        totalPrice=totalPrice+30000;
+
+    showCart();
+    }
+    function addTablet(){
+        tabletQty=tabletQty+1;
+        totalItems=totalItems+1;
+        totalPrice=totalPrice+20000;
+
+    showCart();
+    }
+    function addEarphone(){
+        earphoneQty=earphoneQty+1;
+        totalItems=totalItems+1;
+        totalPrice=totalPrice+2500;
+        
+    showCart();
+    }
+    function addLed(){
+        ledQty=ledQty+1;
+        totalItems=totalItems+1;
+        totalPrice=totalPrice+20000;
+
+    showCart();
+    }
+    function addsmartWatch(){   
+        smartwatchQty++;
+        totalItems++;
+        totalPrice += 2000;
+
+    showCart();
+    }
+
+  //remove function//
+     
+function removeMobile(){
+    if(mobileQty > 0){
+        mobileQty = mobileQty - 1;
+        totalItems = totalItems - 1;
+        totalPrice = totalPrice - 8000;
+        showCart();
+    }
+}
+function removeLaptop(){
+    if(laptopQty > 0){
+        laptopQty =  laptopQty - 1;
+        totalItems = totalItems - 1;
+        totalPrice = totalPrice - 30000;
+        showCart();
+    }
+}
+function removeTablet(){
+    if (tabletQty > 0){
+        tabletQty = tabletQty - 1;
+        totalItems = totalItems - 1;
+        totalPrice = totalPrice - 20000;
+        showCart();
+    }
+}
+function removeEarphone(){
+    if(earphoneQty > 0){
+        earphoneQty = earphoneQty - 1;
+        totalItems = totalItems - 1;
+        totalPrice = totalPrice - 2500;  
+        showCart();
+    }
+}
+function removeSmartWatch(){
+    if(smartwatchQty > 0){
+        smartwatchQty = smartwatchQty - 1;
+        totalItems = totalItems - 1;
+        totalPrice = totalPrice - 2500;
+        showCart();
+    }
+}
+function removeLed(){
+    if(ledQty > 0){
+        ledQty = ledQty - 1;
+        totalItems = totalItems - 1;
+        totalPrice = totalPrice - 20000;
+        showCart();
+    }
+}
+
+     //showcart//
+    function showCart() {
+    let cartData = "";
+    if (mobileQty > 0) cartData += 
+       `<li>Mobile  ${mobileQty} = ₹${mobileQty*8000} 
+        <span class="cart-buttons">
+        <button class="minus" onclick="removeMobile()">-</button>
+        <button class="plus" onclick="addMobile()">+</button>
+        </span> </li>`;
+
+    if (laptopQty > 0) cartData += 
+       `<li>Laptop  ${laptopQty} = ₹${laptopQty*30000}
+        <span class="cart-buttons">
+        <button class="minus" onclick="removeLaptop()">-</button>
+        <button class="plus" onclick="addLaptop()">+</button>
+        </span></li>`;
+
+    if (tabletQty > 0) cartData +=
+       `<li>Tablet  ${tabletQty} = ₹${tabletQty*20000}<span class="cart-buttons">
+        <button class="minus" onclick="removeMobile()">-</button>
+        <button class="plus" onclick="addMobile()">+</button>
+        </span></li>`;
+
+    if (smartwatchQty > 0) cartData +=
+       `<li>Smart-Watch  ${smartwatchQty} = ₹${smartwatchQty*2000}
+        <span class="cart-buttons">
+        <button class="minus" onclick="removeSmartWatch ()">-</button>
+        <button class="plus" onclick="addSmartWatch ()">+</button>
+        </span></li>`;
+
+    if (ledQty > 0) cartData +=
+        `<li>LED  ${ledQty} = ₹${ledQty*20000}
+        <span class="cart-buttons">
+        <button class="minus" onclick="removeLeD()">-</button>
+        <button class="plus" onclick="addLeD()">+</button>
+        </span></li>`;
+
+    if (earphoneQty > 0) cartData += 
+       `<li>Ear-Phone  ${earphoneQty} = ₹${earphoneQty*2500}
+        <span class="cart-buttons">
+        <button class="minus" onclick="removeEarPhone()">-</button>
+        <button class="plus" onclick="addEarPhone()">+</button>
+        </span></li>`;
+     
+
+    document.getElementById("cart-items").innerHTML = cartData;
+    document.getElementById("total").innerText = "Total Items: " + totalItems + " | Total Price: ₹" + totalPrice ;
+}
+
+function searchProduct() {
+    let searchText = document.getElementById("search").value.toLowerCase();
+   
+    if (searchText == "mobile") {
+        document.getElementById("mobile-card").style.display = "";
+    } else {
+        document.getElementById("mobile-card").style.display = "none";
+    }
+
+    
+    if (searchText == "laptop") {
+        document.getElementById("laptop-card").style.display = "";
+    } else {
+        document.getElementById("laptop-card").style.display = "none";
+    }
+
+   
+    if (searchText == "tablet") {
+        document.getElementById("tablet-card").style.display = "";
+    } else {
+        document.getElementById("tablet-card").style.display = "none";
+    }
+
+   
+    if (searchText == "smartwatch" || searchText == "smart-watch") {
+        document.getElementById("watch-card").style.display = "";
+    } else {
+        document.getElementById("watch-card").style.display = "none";
+    }
+
+  
+    if (searchText == "led") {
+        document.getElementById("led-card").style.display = "";
+    } else {
+        document.getElementById("led-card").style.display = "none";
+    }
+
+   
+    if (searchText == "earphone" || searchText == "ear-phone") {
+        document.getElementById("earphone-card").style.display = "";
+    } else {
+        document.getElementById("earphone-card").style.display = "none";
+    }
+
+   
+    if (searchText == "") {
+        document.getElementById("mobile-card").style.display = "";
+        document.getElementById("laptop-card").style.display = "";
+        document.getElementById("tablet-card").style.display = "";
+        document.getElementById("watch-card").style.display = "";
+        document.getElementById("led-card").style.display = "";
+        document.getElementById("Earphone-card").style.display = "";
+    }
+}
+
+</script>
+</html>

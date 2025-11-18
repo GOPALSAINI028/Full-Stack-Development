@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1 id="demo"></h1>
+
+    <script>
+   //for loop//
+
+  /* 1.It is General loop
+     2.We use a counter variable (like(i) that starts with no.and increases step by step and stops when condition beacame false )
+     3.You have full scope to skip ,jump,or stop
+     4. use case: we need counting or manual control*/
+
+  // for example//
+  /* let  fruits=["Mango","orange","banana"];
+     for (let  i=0; i<fruits.length; i++){
+     console.log("fruits:"+fruits[i]);
+   }*/
+
+  //for each loop//
+
+  /* 1.It is Special loops for arrays
+     2.Its automatically gives each item of the array one by one
+     3.no need to manage counting 
+     5.use case: Need to work on each elemnt of array  */
+
+   //for example//
+    /* let fruits=["Mango","orange","banana","Apple"];
+     fruits.forEach((fruits,index)=>{
+     console.log( "index:"+index , "fruits:" +fruits  );
+   })*/
+
+   const students =["Aman", "Riya","Karan"];
+   let msg=""
+
+   students.forEach(( name,index)=>{
+    msg+= "Hello" + name + "(Roll No:" + (index+1) +")<br>";
+    })
+    document.getElementbyId("demo").innerHtml=msg;
+
+
+//for loop flow diagram//
+/*Start → Initialization (let i=0)
+          ↓
+      Condition check (i < array.length)?
+          ↓ Yes
+   Run loop body (console.log)
+          ↓
+      Update (i++)
+          ↓
+   Back to condition check
+          ↓
+   Repeat until condition false
+          ↓
+        End*/
+
+//foreach loop flow diagram//
+/*Start → Take array
+          ↓
+   First element → Run callback function
+          ↓
+   Second element → Run callback function
+          ↓
+   Third element → Run callback function
+          ↓
+   … continues for all elements
+          ↓
+        End
+👉 Kaise kaam karta hai:*/
+/*Array khud ek-ek element nikalta hai.
+
+Har element ke liye callback function automatically run hota hai.
+
+Humko condition ya increment likhne ki zarurat nahi.*/
+
+ //while loop//
+/* 1. loop is continue when the conditon is true.
+   2. firstly condition  check and after the loop to be execute.
+   3. when condition is false loop doesn't be execute.*/
+//for example//
+ /* let i=0;
+  while(i<5){
+  console.log(i);
+  i++;
+}*/
+
+//Do while//
+
+</script>
+</body>
+</html>

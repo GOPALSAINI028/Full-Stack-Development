@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Train Reservation System</title>
+  <style>
+    body {
+      font-family: "Segoe UI", sans-serif;
+      background: linear-gradient(to right, #e0f7fa, #f1f5f9);
+      margin: 0;
+      padding: 20px;
+    }
+    h1 {
+      color: #0f172a;
+      text-align: center;
+      margin-bottom: 25px;
+    }
+    .container {
+      display: grid;
+      grid-template-columns: 250px 1fr;
+      gap: 20px;
+    }
+    .controls {
+      background: #ffffff;
+      padding: 15px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    .controls h2 {
+      text-align: center;
+      margin-bottom: 10px;
+    }
+    .btn {
+      display: block;
+      width: 100%;
+      margin: 8px 0;
+      padding: 10px;
+      background: #0284c7;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: background 0.3s, transform 0.2s;
+    }
+    .btn:hover {
+      background: #0369a1;
+      transform: translateY(-2px);
+    }
+    .results {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 15px;
+    }
+    .card {
+      background: #ffffff;
+      border-left: 6px solid #0284c7;
+      color: #1e293b;
+      padding: 12px;
+      border-radius: 8px;
+      min-height: 80px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+    }
+    .card h2 {
+      font-size: 15px;
+      margin-bottom: 6px;
+      color: #334155;
+    }
+    .box {
+      font-size: 14px;
+      white-space: pre-wrap;
+      color: #475569;
+    }
+  </style>
+</head>
+<body>
+  <h1> Train Reservation System</h1>
+  <div class="container">
+    <!-- Left Controls -->
+    <div class="controls">
+      <h2></h2>
+      <button class="btn" onclick="passengerList()">1. Passenger List</button>
+      <button class="btn" onclick="seniorCitizens()">2. Senior Citizens</button>
+      <button class="btn" onclick="uppercaseNames()">3. Uppercase Names</button>
+      <button class="btn" onclick="totalAge()">4. Total Age (reduce)</button>
+      <button class="btn" onclick="totalAgeReverse()">5. Total Age Reverse</button>
+      <button class="btn" onclick="checkAdults()">6. Check All Adults</button>
+      <button class="btn" onclick="checkMinors()">7. Any Minors?</button>
+      <button class="btn" onclick="convertSeats()">8. Convert Seat Numbers</button>
+      <button class="btn" onclick="addPassengers()">9. Add Extra Passengers</button>
+      <button class="btn" onclick="separateFirst()">10. Separate First Passenger</button>
+    </div>
+
+    <!-- Right Results -->
+    <div class="results">
+      <div class="card"><h2>Passenger List</h2><div id="result1" class="box"></div></div>
+      <div class="card"><h2>Senior Citizens</h2><div id="result2" class="box"></div></div>
+      <div class="card"><h2>Uppercase Names</h2><div id="result3" class="box"></div></div>
+      <div class="card"><h2>Total Age</h2><div id="result4" class="box"></div></div>
+      <div class="card"><h2>Total Age Reverse</h2><div id="result5" class="box"></div></div>
+      <div class="card"><h2>Check Adults</h2><div id="result6" class="box"></div></div>
+      <div class="card"><h2>Check Minors</h2><div id="result7" class="box"></div></div>
+      <div class="card"><h2>Convert Seats</h2><div id="result8" class="box"></div></div>
+      <div class="card"><h2>Add Passengers</h2><div id="result9" class="box"></div></div>
+      <div class="card"><h2>Separate First</h2><div id="result10" class="box"></div></div>
+    </div>
+  </div>
+
+<script>
+  
+  let names   = ["Amit","Raju","Sunita","Geeta","Durgesh","Anil"];
+  let ages    = [25,64,15,72,45,18];
+  let seats   = ["12","13","14","15","16","17"];
+  let genders = ["M","M","F","F","M","M"];
+
+ function passengerList(){
+  if(names.length === 0){
+    document.getElementById("result1").textContent = " No passengers found.";
+    return;
+  }
+  let out = names.map((n,i)=>`Passenger: ${n} | Age: ${ages[i]} | Seat: ${seats[i]} | Gender: ${genders[i]}`).join("\n");
+  document.getElementById("result1").textContent = out;
+}
+function seniorCitizens(){
+  let out = names
+    .filter((n,i)=> ages[i] >= 60)  
+    .map((n,i)=> `${n} (${ages[names.indexOf(n)]}`)
+    .join(", ");
+
+  document.getElementById("result2").textContent = out || "No senior citizens found.";
+}
+ function uppercaseNames(){
+  if(names.length === 0){
+    document.getElementById("result3").textContent = " No names available.";
+    return;
+  }
+  document.getElementById("result3").textContent = names.map(n=>n.toUpperCase()).join(", ");
+}
+
+function totalAge(){
+  if(ages.length === 0){
+    document.getElementById("result4").textContent = " No ages found.";
+    return;
+  }
+  let sum = ages.reduce((a,b)=>a+b,0);
+  document.getElementById("result4").textContent = "Total Age = " + sum;
+}
+
+function totalAgeReverse(){
+    let sum = ages.reduceRight((a,b)=>a+b,0);
+    document.getElementById("result5").textContent = "Total Age (Right to Left) = " + sum;
+  }
+
+function checkAdults(){
+  if(ages.length === 0){
+    document.getElementById("result6").textContent = " No data to check.";
+    return;
+  }
+  let allAdults = ages.every(a=>a>=18);
+  document.getElementById("result6").textContent = allAdults ? " All are adults" : " Some are minors";
+}
+function checkMinors(){
+  if(ages.length === 0){
+    document.getElementById("result7").textContent = " No data to check.";
+    return;
+  }
+  let anyMinor = ages.some(a=>a<18);
+  document.getElementById("result7").textContent = anyMinor ? " There is at least one minor" : " No minors found";
+}
+
+function convertSeats(){
+  if(seats.length === 0){
+    document.getElementById("result8").textContent = " No seats available.";
+    return;
+  }
+
+  let nums = Array.from(seats, s=>parseInt(s));
+  document.getElementById("result8").textContent = "Converted: " + nums.join(", ");
+}
+
+function addPassengers(){
+  if(names.includes("Rahul") || names.includes("Sita")){
+    document.getElementById("result9").textContent = " Extra passengers already added.";
+    return;
+  }
+  names = [...names,"Rahul","Sita"];
+  document.getElementById("result9").textContent = "Updated Names: " + names.join(", ");
+}
+
+function separateFirst(){
+    let [first,...rest] = names;
+    document.getElementById("result10").textContent = `First Passenger: ${first}\nRemaining: ${rest.join(", ")}`;
+  }
+</script>
+</body>
+</html>
+

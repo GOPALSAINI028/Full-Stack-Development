@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <h1>ALGO TRADING BOT</h1> 
+</body>
+<script>
+  let buyingPrice = 100;
+  let currentPrices = [90, 120, 100, 80,150 ];
+
+  function tradingDecision(currentPrices, buy) {
+    if (currentPrices>buy) {
+      return "SELL";
+    } else if (currentPrices<buy) {
+      return "BUY";
+    } else {
+      return "HOLD";
+    } 
+  }
+  for (let i = 0; i < currentPrices.length; i++) { 
+    let decision = tradingDecision(currentPrices[i], buyingPrice); 
+    console.log("Round " + (i + 1) + ": Price = " + currentPrices[i] + " → " + decision);
+   }
+
+
+</script>
+</html>
