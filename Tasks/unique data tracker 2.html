@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+     const userSet = new Set();
+
+function addUsername(username) {
+    if (userSet.has(username)) {
+        console.log("User already exists.");
+        return false;
+    } else {
+        userSet.add(username);
+        console.log("User added.");
+        return true;
+    }
+}
+
+const userDataMap = new Map();
+
+function updateUserData(username, data) {
+    if (!userSet.has(username)) {
+        console.log("User does not exist.");
+        return false;
+    } else {
+        userDataMap.set(username, data);
+        console.log("User data updated.");
+        return true;
+    }
+}
+
+function* idGenerator() {
+    let id = 1;
+    while (true) {
+        yield `U${id.toString().padStart(3, '0')}`;
+        id++;
+    }
+}
+
+const gen = idGenerator();
+
+function addUser(username, data) {
+    if (!addUsername(username)) return;
+    const id = gen.next().value;
+    userDataMap.set(username, { id, ...data });
+    console.log(`User ${username} added with ID ${id}.`);
+}
+
+function displayAllUsers() {
+    userDataMap.forEach((value, key) => {
+        console.log(`Username: ${key}, ID: ${value.id}, Data: ${JSON.stringify(value)}`);
+    });
+}
+
+/* CALL FUNCTIONS */
+
+addUser("ram", { score: 40 });
+addUser("shyam", { score: 60 });
+addUser("ram", { score: 90 });  // Duplicate test
+
+updateUserData("shyam", { score: 85 });
+
+displayAllUsers();
+
+</script>
+</html>
