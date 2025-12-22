@@ -20,6 +20,9 @@ export default function App() {
   );
 }*/
 
+
+// Props Drilling...//
+
 /*import { useState } from "react";
 import StudentList from "./components/StudentList.jsx";
 import AddStudent from "./components/AddStudent.jsx";
@@ -186,13 +189,17 @@ export default function App() {
     </div>
   );
 }*/
-import { useState, useEffect } from "react";
+
+
+// 7 HOOKS...//
+
+/*import { useState, useEffect } from "react";
 import TextInput from "./components/TextInput.jsx";
 import CounterPanel from "./components/CounterPanel.jsx";
 import AnalysisPanel from "./components/AnalysisPanel.jsx";
 import Preview from "./components/Preview.jsx";
 import Warning from "./components/Warning.jsx";
-import AnalyzeText from "./components/AnalyzeText.jsx";
+import AnalyzeText from "./components/useAnalyzeText.jsx";
 import "./App.css";
 
 export default function App() {
@@ -225,4 +232,17 @@ export default function App() {
       <Preview text={text} />
     </div>
   );
+}*/
+
+//Task Manger//
+import TaskManager from "./components/Task manager/TaskManager.jsx";
+
+function App() {
+  return (
+    <div>
+      <TaskManager />
+    </div>
+  );
 }
+
+export default App;

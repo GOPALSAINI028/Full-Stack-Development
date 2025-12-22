@@ -24,7 +24,7 @@ export default function AddStudent({ onAdd }) {
       <button onClick={addStudent}>Add Student</button>
     </div>
   );
-}*/
+}
 //Task 4
 /*export default function AddStudent({ onAdd }) {
   const newStudent = {
